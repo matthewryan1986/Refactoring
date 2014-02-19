@@ -37,8 +37,8 @@ public class TestReport extends TestCase {
 		StringBuffer buffer = new StringBuffer();
 		report.write(buffer);
 		String result = buffer.toString();
-		String valid1 = "CS101 M10\n\tBob\n\tAlice\n" + "CS101 T9\n\tBob\n" + "Number of scheduled offerings: 2\n";
-		String valid2 = "CS101 T9\n\tBob\n" + "CS101 M10\n\tBob\n\tAlice\n" + "Number of scheduled offerings: 2\n";
+		String valid1 = "CS101 M10\n\tAlice\n\tBob\n" + "CS101 T9\n\tBob\n" + "Number of scheduled offerings: 2\n";
+		String valid2 = "CS101 T9\n\tAlice\n" + "CS101 M10\n\tAlice\n\tBob\n" + "Number of scheduled offerings: 2\n";
 		assertTrue(result.equals(valid1) || result.equals(valid2));
 	}
 }

@@ -13,7 +13,7 @@ public class Schedule {
 	
 	ArrayList<Offering> schedule = new ArrayList<Offering>();
 	
-	static String url = "jdbc:mysql://localhost3306/Registration";
+	static String url = "jdbc:mysql://localhost:3306/Registration";
 	static { 
 		try { 
 			Class.forName("com.mysql.jdbc.Driver"); 
@@ -60,8 +60,7 @@ public class Schedule {
 			ResultSet result = statement.executeQuery("SELECT * FROM schedule WHERE Name= '" + name + "';");
 			Schedule schedule = new Schedule(name);
 			while (result.next()) {
-				int offeringId = result.getInt("OfferingId");
-				Offering offering = Offering.find(offeringId);
+				Offering offering = Offering.find(result.getInt("OfferingId"));
 				schedule.add(offering);
 			}
 			return schedule;
@@ -104,7 +103,7 @@ public class Schedule {
 			statement.executeUpdate("DELETE FROM schedule WHERE name = '" + name + "';");
 			for (int i = 0; i < schedule.size(); i++) {
 				Offering offering = (Offering) schedule.get(i);
-				statement.executeUpdate("INSERT INTO schedule VALUES('" + name + "','" + offering.getId() + "');");
+				statement.executeUpdate("INSERT INTO schedule(name, OfferingId) VALUES('" + name + "','" + offering.getId() + "');");
 			}
 		} 
 		finally {

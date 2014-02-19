@@ -115,7 +115,7 @@ public class TestSchedule extends TestCase {
 	}
 
 	public void testScheduleUpdate() throws Exception {
-		Course cs101 = Course.create("CS101", 3);
+		Course cs101 = Course.create("CS101", 3 );
 		cs101.update();
 		Offering off1 = Offering.create(cs101, "M10");
 		off1.update();

@@ -5,7 +5,7 @@ import java.sql.*;
 public class Course {
 	private String name;
 	private int credits;
-	static String url = "jdbc:mysql://localhost3306/Registration";
+	static String url = "jdbc:mysql://localhost:3306/Registration";
 	static { 
 		try { 
 			Class.forName("com.mysql.jdbc.Driver"); 
@@ -19,7 +19,7 @@ public class Course {
 			conn = DriverManager.getConnection(url, "root", "root");
 			Statement statement = conn.createStatement();
 			statement.executeUpdate("DELETE FROM course WHERE name = '" + name + "';");
-			statement.executeUpdate("INSERT INTO course VALUES ('" + name + "', '" + credits + "');");
+			statement.executeUpdate("INSERT INTO course(name, credits) VALUES ('" + name + "', '" + credits + "');");
 			return new Course(name, credits);
 		} 
 		finally {

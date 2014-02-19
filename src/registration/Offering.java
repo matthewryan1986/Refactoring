@@ -6,7 +6,7 @@ public class Offering {
 	private int id;
 	private Course course;
 	private String daysTimes;
-	static String url = "jdbc:mysql://localhost3306/Registration";
+	static String url = "jdbc:mysql://localhost:3306/Registration";
 	static { 
 		try { 
 			Class.forName("com.mysql.jdbc.Driver"); 
