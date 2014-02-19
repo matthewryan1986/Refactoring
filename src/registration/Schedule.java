@@ -26,7 +26,7 @@ public class Schedule {
 		try {
 			conn = DriverManager.getConnection(url, "root", "root");
 			Statement statement = conn.createStatement();
-			statement.executeUpdate("DELETE * FROM schedule;");
+			statement.executeUpdate("DELETE FROM schedule;");
 		} 
 		finally {
 			try { 
