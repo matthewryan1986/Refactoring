@@ -43,7 +43,7 @@ public class Offering {
 				return null;
 			String courseName = result.getString("name");
 			Course course = Course.find(courseName);
-			String dateTime = result.getString("date_times");
+			String dateTime = result.getString("day_times");
 			conn.close();
 			return new Offering(id, course, dateTime);
 		} 
