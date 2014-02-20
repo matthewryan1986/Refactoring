@@ -96,41 +96,41 @@ public class TestSchedule extends TestCase {
 	}
 
 	public void testCourseCreate() throws Exception {
-		Course c = Course.create("CS202", 1);
-		Course c2 = Course.find("CS202");
+		Course c = Persistence.createCourse("CS202", 1);
+		Course c2 = Persistence.findCourse("CS202");
 		assertEquals("CS202", c2.getName());
-		Course c3 = Course.find("Nonexistent");
+		Course c3 = Persistence.findCourse("Nonexistent");
 		assertNull(c3);
 	}
 
 	public void testOfferingCreate() throws Exception {
-		Course c = Course.create("CS202", 2);
-		Offering offering = Offering.create(c, "M10");
+		Course c = Persistence.createCourse("CS202", 2);
+		Offering offering = Persistence.createOffering(c, "M10");
 		assertNotNull(offering);
 	}
 
 	public void testPersistentSchedule() throws Exception {
-		Schedule s = Schedule.create("Bob");
+		Schedule s = Persistence.createSchedule("Bob");
 		assertNotNull(s);
 	}
 
 	public void testScheduleUpdate() throws Exception {
-		Course cs101 = Course.create("CS101", 3 );
-		cs101.update();
-		Offering off1 = Offering.create(cs101, "M10");
-		off1.update();
-		Offering off2 = Offering.create(cs101, "T9");
-		off2.update();
-		Schedule s = Schedule.create("Bob");
+		Course cs101 = Persistence.createCourse("CS101", 3 );
+		Persistence.updateCourse(cs101);
+		Offering off1 = Persistence.createOffering(cs101, "M10");
+		Persistence.updateOffering(off1);
+		Offering off2 = Persistence.createOffering(cs101, "T9");
+		Persistence.updateOffering(off2);
+		Schedule s = Persistence.createSchedule("Bob");
 		s.add(off1);
 		s.add(off2);
-		s.update();
-		Schedule s2 = Schedule.create("Alice");
+		Persistence.updateSchedule(s);
+		Schedule s2 = Persistence.createSchedule("Alice");
 		s2.add(off1);
-		s2.update();
-		Schedule s3 = Schedule.find("Bob");
+		Persistence.updateSchedule(s2);
+		Schedule s3 = Persistence.findSchedule("Bob");
 		assertEquals(2, s3.schedule.size());
-		Schedule s4 = Schedule.find("Alice");
+		Schedule s4 = Persistence.findSchedule("Alice");
 		assertEquals(1, s4.schedule.size());
 	}
 }

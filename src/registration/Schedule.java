@@ -13,6 +13,26 @@ public class Schedule {
 	
 	ArrayList<Offering> schedule = new ArrayList<Offering>();
 	
+	public String getName() {
+		return name;
+	}
+
+	public int getCredits() {
+		return credits;
+	}
+
+	public boolean isPermission() {
+		return permission;
+	}
+
+	public ArrayList<Offering> getSchedule() {
+		return schedule;
+	}
+
+	public static String getUrl() {
+		return url;
+	}
+
 	static String url = "jdbc:mysql://localhost:3306/Registration";
 	static { 
 		try { 
@@ -21,98 +41,7 @@ public class Schedule {
 		catch (Exception ignored) {} 
 	}
 
-	public static void deleteAll() throws Exception {
-		Connection conn = null;
-		try {
-			conn = DriverManager.getConnection(url, "root", "root");
-			Statement statement = conn.createStatement();
-			statement.executeUpdate("DELETE FROM schedule;");
-		} 
-		finally {
-			try { 
-				conn.close(); 
-			} 
-			catch (Exception ignored) {}
-		}
-	}
-	
-	public static Schedule create(String name) throws Exception {
-		Connection conn = null;
-		try {
-			conn = DriverManager.getConnection(url, "root", "root");
-			Statement statement = conn.createStatement();
-			statement.executeUpdate("DELETE FROM schedule WHERE name = '" + name + "';");
-			return new Schedule(name);
-		} 
-		finally {
-			try { 
-				conn.close(); 
-			} 
-			catch (Exception ignored) {}
-		}
-	}
-	
-	public static Schedule find(String name) {
-		Connection conn = null;
-		try {
-			conn = DriverManager.getConnection(url, "root", "root");
-			Statement statement = conn.createStatement();
-			ResultSet result = statement.executeQuery("SELECT * FROM schedule WHERE Name= '" + name + "';");
-			Schedule schedule = new Schedule(name);
-			while (result.next()) {
-				Offering offering = Offering.find(result.getInt("OfferingId"));
-				schedule.add(offering);
-			}
-			return schedule;
-		} 
-		catch (Exception ex) {
-			return null;
-		} 
-		finally {
-			try { 
-				conn.close(); 
-			} 
-			catch (Exception ignored) {}
-		}
-	}
 
-	public static Collection<Schedule> all() throws Exception {
-		ArrayList<Schedule> result = new ArrayList<Schedule>();
-		Connection conn = null;
-		try {
-			conn = DriverManager.getConnection(url, "root", "root");
-			Statement statement = conn.createStatement();
-			ResultSet results = statement.executeQuery("SELECT DISTINCT Name FROM schedule;");
-			while (results.next())
-			result.add(Schedule.find(results.getString("Name")));
-		} 
-		finally {
-			try { 
-				conn.close(); 
-			} 
-			catch (Exception ignored) {}
-		}
-		return result;
-	}
-
-	public void update() throws Exception {
-		Connection conn = null;
-		try {
-			conn = DriverManager.getConnection(url, "root", "root");
-			Statement statement = conn.createStatement();
-			statement.executeUpdate("DELETE FROM schedule WHERE name = '" + name + "';");
-			for (int i = 0; i < schedule.size(); i++) {
-				Offering offering = (Offering) schedule.get(i);
-				statement.executeUpdate("INSERT INTO schedule(name, OfferingId) VALUES('" + name + "','" + offering.getId() + "');");
-			}
-		} 
-		finally {
-			try { 
-				conn.close(); 
-			} 
-			catch (Exception ignored) {}
-		}
-	}
 
 	public Schedule(String name) {
 		this.name = name;
