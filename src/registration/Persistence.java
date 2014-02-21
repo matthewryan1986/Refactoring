@@ -66,8 +66,8 @@ public class Persistence {
 		try {
 			conn = DriverManager.getConnection(url, "root", "root");
 			Statement statement = conn.createStatement();
-			statement.executeUpdate("DELETE FROM COURSE WHERE name = '" + newCourse.getName() + "';");
-			statement.executeUpdate("INSERT INTO course(name, credits) VALUES('" + newCourse.getName() + "','" + newCourse.getCredits() + "');");
+			statement.executeUpdate("DELETE FROM course WHERE name = '" + course.getName() + "';");
+			statement.executeUpdate("INSERT INTO course(name, credits) VALUES('" +course.getName() + "','" +course.getCredits() + "');");
 		} 
 		finally {
 			try { 
@@ -121,10 +121,11 @@ public class Persistence {
 	public static void updateOffering(Offering offering) throws Exception {
 		Connection conn = null;
 		try {
+			Course course = new Course("CS212", 10);
 			conn = DriverManager.getConnection(url, "root", "root");
 			Statement statement = conn.createStatement();
-			statement.executeUpdate("DELETE FROM Offering WHERE ID=" + newOffering.getId() + ";");
-			statement.executeUpdate("INSERT INTO Offering VALUES('" + newOffering.getId() + "','" + newCourse.getName() + "','" + newOffering.getDaysTimes() + "');");
+			statement.executeUpdate("DELETE FROM Offering WHERE ID=" + offering.getId() + ";");
+			statement.executeUpdate("INSERT INTO Offering VALUES('" + offering.getId() + "','" + course.getName() + "','" + offering.getDaysTimes() + "');");
 		} 
 		finally {
 			try { 
@@ -213,10 +214,10 @@ public class Persistence {
 		try {
 			conn = DriverManager.getConnection(url, "root", "root");
 			Statement statement = conn.createStatement();
-			statement.executeUpdate("DELETE FROM schedule WHERE name = '" + newSchedule.name + "';");
+			statement.executeUpdate("DELETE FROM schedule WHERE name = '" + schedule.name + "';");
 			for (int i = 0; i < scheduleList.size(); i++) {
 				Offering offering = (Offering) scheduleList.get(i);
-				statement.executeUpdate("INSERT INTO schedule(name, OfferingId) VALUES('" + newSchedule.name + "','" + offering.getId() + "');");
+				statement.executeUpdate("INSERT INTO schedule(name, OfferingId) VALUES('" + schedule.name + "','" + offering.getId() + "');");
 			}
 		} 
 		finally {
